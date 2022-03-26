@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/admin/upload">Upload</a>
+
+    </div>
+
+    <div style="padding:16px">
+        <h2>LIST USER:</h2>
+    </div>
+    <div class="w3-container">
+
+        <table class="w3-table-all w3-hoverable">
+            <thead>
+                <tr class="w3-light-grey">
+                    <th>id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                <% for(let i=0; i < data.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%= data[i].id %>
+                        </td>
+                        <td>
+                            <%= data[i].firstName %>
+                        </td>
+                        <td>
+                            <%= data[i].lastName %>
+                        </td>
+                        <td>
+                            <button type="button" class="updateBTN" id="<%=data[i].id%>"
+                                onclick="window.location.href='/admin/update-user/<%= data[i].id %>'">Edit</button>
+                            <button type="button"
+                                onclick="window.location.href='/detail/user/<%= data[i].id %>'">Detail</button>
+                            <button type="button" class="deleteBTN" id="<%=data[i].id%>">Delete</button>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+    <div id="w3-form">
+        <form action="/admin/create-user" method="post">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+            <label for="email">Last Name</label>
+            <input type="text" id="email" name="email" placeholder="Your email..">
+
+            <label for="address">Last Name</label>
+            <input type="text" id="address" name="address" placeholder="Your address..">
+
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <form method="post" action="" id="deleteForm"></form>
+
+
+
+
+</body>
+<script>
+    const deleteBTNs = document.querySelectorAll('.deleteBTN')
+    const deleteForm = document.querySelector('#deleteForm')
+
+    deleteBTNs.forEach(deleteBTN => {
+        deleteBTN.onclick = (e) => {
+            deleteForm.action = `/admin/delete-user/${e.target.id}`
+            deleteForm.submit()
+        }
+    })
+
+
+
+</script>
+
+</html>
